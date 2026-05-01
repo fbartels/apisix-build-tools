@@ -46,6 +46,9 @@ install_openresty_rpm() {
 install_luarocks() {
     wget https://raw.githubusercontent.com/apache/apisix/master/utils/linux-install-luarocks.sh
     chmod +x linux-install-luarocks.sh
+    # Pin to 3.11.1 to avoid a nil-concatenation bug in 3.12.0 that breaks
+    # rockspec dependency resolution. See luarocks/luarocks#1868.
+    sed -i 's/^LUAROCKS_VER=.*/LUAROCKS_VER=3.11.1/' linux-install-luarocks.sh
     ./linux-install-luarocks.sh
 }
 
