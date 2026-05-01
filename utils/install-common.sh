@@ -30,7 +30,7 @@ install_dependencies_rpm() {
 install_dependencies_deb() {
     # install basic dependencies
     DEBIAN_FRONTEND=noninteractive apt-get update
-    DEBIAN_FRONTEND=noninteractive apt-get install -y wget tar gcc automake autoconf libtool make curl git unzip sudo libreadline-dev lsb-release gawk libyaml-dev
+    DEBIAN_FRONTEND=noninteractive apt-get install -y wget tar gcc automake autoconf libtool make curl git unzip sudo libreadline-dev lsb-release gawk libyaml-dev lua5.1
 }
 
 install_openresty_deb() {
@@ -50,6 +50,11 @@ install_luarocks() {
     # rockspec dependency resolution. See luarocks/luarocks#1868.
     sed -i 's/^LUAROCKS_VER=.*/LUAROCKS_VER=3.11.1/' linux-install-luarocks.sh
     ./linux-install-luarocks.sh
+    # Use system lua5.1 to run luarocks itself to avoid LuaJIT's 65536 constant
+    # limit when loading the large luarocks.org manifest. Packages are still
+    # compiled against LuaJIT since luarocks was built with --with-lua pointing
+    # to OpenResty's LuaJIT. See luarocks/luarocks#1602.
+    sed -i "1s|.*|#!/usr/bin/lua5.1|" "$(which luarocks)"
 }
 
 install_etcd() {
