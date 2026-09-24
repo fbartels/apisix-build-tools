@@ -48,7 +48,10 @@ install_luarocks() {
     chmod +x linux-install-luarocks.sh
     # Pin to 3.11.1 to avoid a nil-concatenation bug in 3.12.0 that breaks
     # rockspec dependency resolution. See luarocks/luarocks#1868.
+    # SHA256 must be overridden too: upstream's LUAROCKS_SHA256 is for
+    # whatever LUAROCKS_VER upstream currently pins, not for 3.11.1.
     sed -i 's/^LUAROCKS_VER=.*/LUAROCKS_VER=3.11.1/' linux-install-luarocks.sh
+    sed -i 's/^LUAROCKS_SHA256=.*/LUAROCKS_SHA256=a37e4a3faa835d1b6437ab2d9e2271909664ab614595cb7df1b67ddafe4e2193/' linux-install-luarocks.sh
     ./linux-install-luarocks.sh
     # Use system lua5.1 to run luarocks itself to avoid LuaJIT's 65536 constant
     # limit when loading the large luarocks.org manifest. Packages are still
