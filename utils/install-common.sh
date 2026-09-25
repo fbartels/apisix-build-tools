@@ -32,7 +32,8 @@ install_dependencies_deb() {
     DEBIAN_FRONTEND=noninteractive apt-get update
     # libxml2-dev, libxslt1-dev, libssl-dev, zlib1g-dev: required by xmlsec1,
     # built as part of the lua-resty-saml luarocks dependency.
-    DEBIAN_FRONTEND=noninteractive apt-get install -y wget tar gcc automake autoconf libtool make curl git unzip sudo libreadline-dev lsb-release gawk libyaml-dev lua5.1 libxml2-dev libxslt1-dev libssl-dev zlib1g-dev
+    # cmake: required to build api7-lua-rapidjson.
+    DEBIAN_FRONTEND=noninteractive apt-get install -y wget tar gcc automake autoconf libtool make curl git unzip sudo libreadline-dev lsb-release gawk libyaml-dev lua5.1 libxml2-dev libxslt1-dev libssl-dev zlib1g-dev cmake
 }
 
 install_openresty_deb() {
