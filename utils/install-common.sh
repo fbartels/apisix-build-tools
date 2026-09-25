@@ -30,7 +30,9 @@ install_dependencies_rpm() {
 install_dependencies_deb() {
     # install basic dependencies
     DEBIAN_FRONTEND=noninteractive apt-get update
-    DEBIAN_FRONTEND=noninteractive apt-get install -y wget tar gcc automake autoconf libtool make curl git unzip sudo libreadline-dev lsb-release gawk libyaml-dev lua5.1
+    # libxml2-dev, libxslt1-dev, libssl-dev, zlib1g-dev: required by xmlsec1,
+    # built as part of the lua-resty-saml luarocks dependency.
+    DEBIAN_FRONTEND=noninteractive apt-get install -y wget tar gcc automake autoconf libtool make curl git unzip sudo libreadline-dev lsb-release gawk libyaml-dev lua5.1 libxml2-dev libxslt1-dev libssl-dev zlib1g-dev
 }
 
 install_openresty_deb() {
